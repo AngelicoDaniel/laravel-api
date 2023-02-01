@@ -4,6 +4,9 @@
 
             <ul v-else-if="posts.length">
                 <li v-for="elem in posts" :key="elem.id">{{ elem.title }}</li>
+                <!-- <span v-if="elem.category">
+                    {{ elem.category.name }}
+                </span> -->
             </ul>
             <p v-else>Non ci sono post nel DB</p>
 
