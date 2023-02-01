@@ -1924,7 +1924,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'Pagination'
+  name: 'Pagination',
+  props: ['pagination']
 });
 
 /***/ }),
@@ -1959,10 +1960,46 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PostList',
-  props: ['posts', 'isLoading'],
+  // props: ['posts', 'isLoading', 'pagination'],
   components: {
     Loader: _Loader_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     Pagination: _Pagination_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      posts: [],
+      isLoading: false,
+      pagination: {}
+    };
+  },
+  mounted: function mounted() {
+    this.getPosts();
+  },
+  methods: {
+    getPosts: function getPosts() {
+      var _this = this;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.isLoading = true;
+      axios.get('http://127.0.0.1:8000/api/posts?page=' + page).then(function (res) {
+        console.log(res.data);
+        // this.posts = res.data.data
+
+        //destrutturizzazione
+        var _res$data = res.data,
+          data = _res$data.data,
+          current_page = _res$data.current_page,
+          last_page = _res$data.last_page;
+        _this.posts = data;
+        _this.pagination = {
+          lastPage: last_page,
+          currentPage: current_page
+        };
+      })["catch"](function (err) {
+        console.log(err);
+      }).then(function () {
+        _this.isLoading = false;
+      });
+    }
   }
 });
 
@@ -1986,42 +2023,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     WorkInProgress: _components_WorkInProgress_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     PostList: _components_posts_PostList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
-  },
-  data: function data() {
-    return {
-      posts: [],
-      isLoading: false,
-      pagination: {}
-    };
-  },
-  mounted: function mounted() {
-    this.getPosts();
-  },
-  methods: {
-    getPosts: function getPosts() {
-      var _this = this;
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.isLoading = true;
-      axios.get('http://127.0.0.1:8000/api/posts?page' + page).then(function (res) {
-        console.log(res.data);
-        // this.posts = res.data.data
-
-        //destrutturizzazione
-        var _res$data = res.data,
-          data = _res$data.data,
-          current_page = _res$data.current_page,
-          last_page = _res$data.last_page;
-        _this.posts = data;
-        _this.pagination = {
-          lastPage: last_page,
-          currentPage: current_page
-        };
-      })["catch"](function (err) {
-        console.log(err);
-      }).then(function () {
-        _this.isLoading = false;
-      });
-    }
   }
 });
 
@@ -2078,59 +2079,60 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _vm._m(0);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
   return _c("nav", {
     attrs: {
       "aria-label": "Page navigation example"
     }
   }, [_c("ul", {
     staticClass: "pagination"
-  }, [_c("li", {
-    staticClass: "page-item"
+  }, [_vm.pagination.currentPage != 1 ? _c("li", {
+    staticClass: "page-item",
+    on: {
+      click: function click($event) {
+        return _vm.$emit("on-page-change", _vm.pagination.currentPage - 1);
+      }
+    }
   }, [_c("span", {
     staticClass: "page-link",
     attrs: {
       role: "button",
       href: "#"
     }
-  }, [_vm._v("Previous")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
+  }, [_vm._v("Previous")])]) : _vm._e(), _vm._v(" "), _vm._l(_vm.pagination.lastPage, function (n) {
+    return _c("li", {
+      key: n,
+      staticClass: "page-item",
+      attrs: {
+        role: "button"
+      },
+      on: {
+        click: function click($event) {
+          return _vm.$emit("on-page-change", n);
+        }
+      }
+    }, [_c("span", {
+      staticClass: "page-link",
+      attrs: {
+        role: "button",
+        href: "#"
+      }
+    }, [_vm._v(_vm._s(n))])]);
+  }), _vm._v(" "), _vm.pagination.currentPage != _vm.pagination.lastPage ? _c("li", {
+    staticClass: "page-item",
+    on: {
+      click: function click($event) {
+        return _vm.$emit("on-page-change", _vm.pagination.currentPage + 1);
+      }
+    }
   }, [_c("span", {
     staticClass: "page-link",
     attrs: {
       role: "button",
       href: "#"
     }
-  }, [_vm._v("1")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("span", {
-    staticClass: "page-link",
-    attrs: {
-      role: "button",
-      href: "#"
-    }
-  }, [_vm._v("2")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("span", {
-    staticClass: "page-link",
-    attrs: {
-      role: "button",
-      href: "#"
-    }
-  }, [_vm._v("3")])]), _vm._v(" "), _c("li", {
-    staticClass: "page-item"
-  }, [_c("span", {
-    staticClass: "page-link",
-    attrs: {
-      role: "button",
-      href: "#"
-    }
-  }, [_vm._v("Next")])])])]);
-}];
+  }, [_vm._v("Next")])]) : _vm._e()], 2)]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 
@@ -2180,7 +2182,14 @@ var render = function render() {
     return _c("li", {
       key: elem.id
     }, [_vm._v(_vm._s(elem.title))]);
-  }), 0) : _c("p", [_vm._v("Non ci sono post nel DB")])], 1);
+  }), 0) : _c("p", [_vm._v("Non ci sono post nel DB")]), _vm._v(" "), _c("Pagination", {
+    attrs: {
+      pagination: _vm.pagination
+    },
+    on: {
+      "on-page-change": _vm.getPosts
+    }
+  })], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2202,12 +2211,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("WorkInProgress"), _vm._v(" "), _c("PostList", {
-    attrs: {
-      posts: _vm.posts,
-      isLoading: _vm.isLoading
-    }
-  })], 1);
+  return _c("div", [_c("WorkInProgress"), _vm._v(" "), _c("PostList")], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
