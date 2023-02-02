@@ -1,11 +1,11 @@
 <template>
     <div>
-        <h1>Work In Progress (componente)</h1>
+        <h1>home</h1>
     </div>
 </template>
 
 <script>
 export default {
-    name: 'WorkInProgress'
+    name: 'HomePage'
 }
 </script>

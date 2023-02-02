@@ -1,9 +1,9 @@
 <template>
     <div>
-        <!-- <WorkInProgress/> -->
+        <Header/>
 
        <!-- <PostList :posts="posts" :isLoading="isLoading" :pagination="pagination"/> -->
-        <!-- <PostList/> -->
+
 
         <router-view></router-view>
     </div>
@@ -11,14 +11,14 @@
 
 <script>
 
-import WorkInProgress from "../components/WorkInProgress.vue"
-import PostList from "../components/posts/PostList.vue"
+import Header from "../components/Header.vue"
+
 
 export default {
     name: 'App',
     components: {
-        WorkInProgress,
-        PostList
+        Header
+
     }
 
 }
