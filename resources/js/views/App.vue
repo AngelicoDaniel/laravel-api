@@ -1,9 +1,11 @@
 <template>
     <div>
-        <WorkInProgress/>
+        <!-- <WorkInProgress/> -->
 
-        <!-- <PostList :posts="posts" :isLoading="isLoading" :pagination="pagination"/> -->
-        <PostList/>
+       <!-- <PostList :posts="posts" :isLoading="isLoading" :pagination="pagination"/> -->
+        <!-- <PostList/> -->
+
+        <router-view></router-view>
     </div>
 </template>
 
