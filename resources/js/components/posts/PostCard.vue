@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1>singolo post: {{ post.title }}</h1>
+        <h1>{{ post.title }}</h1>
 
         <p>
             {{ post.body }}
@@ -24,7 +24,7 @@ mounted(){
     this.getPost();
 },
 methods: {
-    getPosts(){
+    getPost(){
         axios.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.id)
             .then(res => {
                 console.log(res.data);

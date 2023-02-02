@@ -1965,7 +1965,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getPost();
   },
   methods: {
-    getPosts: function getPosts() {
+    getPost: function getPost() {
       var _this = this;
       axios.get('http://127.0.0.1:8000/api/posts/' + this.$route.params.id).then(function (res) {
         console.log(res.data);
@@ -2337,7 +2337,7 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("h1", [_vm._v("singolo post: " + _vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v("\n        " + _vm._s(_vm.post.body) + "\n    ")])]);
+  return _c("div", [_c("h1", [_vm._v(_vm._s(_vm.post.title))]), _vm._v(" "), _c("p", [_vm._v("\n        " + _vm._s(_vm.post.body) + "\n    ")])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
